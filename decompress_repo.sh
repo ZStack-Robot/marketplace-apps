@@ -29,11 +29,11 @@ PYTHON_EXEC=${MARKETPLACE_REPO_PYTHON_EXEC:-python}
 $PYTHON_EXEC "$REPO_PATH/refresh_index.py"
 
 find "$TEMP_DIR" -type f -name "*.bin" | while read -r bin_file; do
+    bin_name=`basename $bin_file`
     echo "===============================================" | tee -a "$LOG_FILE"
     echo "Importing $bin_file, command is: bash $bin_file $1" | tee -a "$LOG_FILE"
     bash "$bin_file" "$REPO_PATH" 2>&1 > $LOG_FILE
-    echo "Import $bin_file successfully!" | tee -a "$LOG_FILE"
-    echo "===============================================" | tee -a "$LOG_FILE"
+    echo "Import $bin_file successfully!" | tee -a "$LOG_FILE"\
 done
 
 echo "All application have been imported to $REPO_PATH." | tee -a "$LOG_FILE"
