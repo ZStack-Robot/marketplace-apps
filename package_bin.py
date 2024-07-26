@@ -65,10 +65,14 @@ def create_app_bin(app_id, architecture, version, copy_image):
     # ->
     # tmp/{app_id}__{arch}__{version}/image.qcow2
     if copy_image:
+        if not os.path.exists(application_bins_dir):
+            os.makedirs(application_bins_dir)
         shutil.copy(image_path, app_tmp_work_path)
         bin_name = "%s.bin" % application_union_mark
         bin_target_path = "%s/%s" % (application_bins_dir, bin_name)
     else:
+        if not os.path.exists(application_no_image_bins_dir):
+            os.makedirs(application_no_image_bins_dir)
         bin_name = "%s__no_images.bin" % application_union_mark
         bin_target_path = "%s/%s" % (application_no_image_bins_dir, bin_name)
 
