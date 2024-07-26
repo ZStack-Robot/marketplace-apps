@@ -1,0 +1,48 @@
+[
+    {
+        "name": "root_disk_size",
+        "required": true,
+        "default_value": 107374182400,
+        "min": 85899345920,
+        "tag": "ZStack::rootDiskSize"
+    },
+    {
+        "name": "memory_size",
+        "required": true,
+        "default_value": 34359738368,
+        "min":25769803776,
+        "tag": "ZStack::memorySize"
+    },
+    {
+        "name": "l3_network_uuids",
+        "required": true,
+        "tag": "ZStack::l3NetworkUuid"
+    },
+    {
+        "name": "cpu_num",
+        "required": true,
+        "default_value": 16,
+        "min": 8,
+        "tag": "ZStack::cpuNumber"
+    },
+    {
+        "name": "image_store_uuid",
+        "required": true,
+        "tag": "ZStack::imageStoreUuid"
+    },
+    {
+        "name": "primary_storage_uuid",
+        "required": true,
+        "tag": "ZStack::primaryStorageUuid"
+    },
+    {
+        "name": "primary_storage_ceph_pool_uuid",
+        "required": false,
+        "tag": "ZStack::primaryStorageCephPoolUuid"
+    },
+    {
+        "name": "cluster_uuid",
+        "required": true,
+        "tag": "ZStack::clusterUuid"
+    }
+]

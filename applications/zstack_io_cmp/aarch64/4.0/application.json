@@ -1,0 +1,8 @@
+{
+    "name":"ZStack CMP多云管理平台",
+    "description":"ZStack CMP多云管理平台支持统一管理分布在多数据中心的ZStack Cube集群。",
+    "details":"多云融合，极简体验，自主可控，提供异构资源接入、自服务申请、低代码配置、混合云计费、流程审批、自动化运维、高级监控大屏等全生命周期管理。产品架构灵活易定制，拥抱生态支持开放集成，统一管理分布在多数据中心的ZStack Cube集群。",
+    "appId": "zstack_io_cmp",
+    "category": "cloud",
+    "connectorType": "zstack"
+}

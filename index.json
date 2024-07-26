@@ -1,0 +1,40 @@
+{
+  "applications": [
+    {
+      "app_id": "test", 
+      "support_versions": [
+        {
+          "architecture": "aarch64", 
+          "versions": [
+            "1.0"
+          ]
+        }, 
+        {
+          "architecture": "x86_64", 
+          "versions": [
+            "1.0", 
+            "2.0"
+          ]
+        }
+      ]
+    }, 
+    {
+      "app_id": "zstack_io_cmp", 
+      "support_versions": [
+        {
+          "architecture": "aarch64", 
+          "versions": [
+            "4.0"
+          ]
+        }, 
+        {
+          "architecture": "x86_64", 
+          "versions": [
+            "4.0"
+          ]
+        }
+      ]
+    }
+  ], 
+  "update_at": 1721981456
+}

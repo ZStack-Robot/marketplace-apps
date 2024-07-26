@@ -1,0 +1,12 @@
+# Ignore all .qcow files
+*.qcow
+
+# Ignore all .bin files
+*.bin
+
+# Ignore pyc
+__pycache__/
+*.pyc
+
+# Ignore all .idea/
+.idea/

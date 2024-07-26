@@ -1,0 +1,8 @@
+{
+    "name":"test",
+    "description":"test description v2",
+    "details":"test details v2",
+    "appId": "app-example v2",
+    "category": "test category",
+    "connectorType": "zstack"
+}
