@@ -17,7 +17,7 @@ tail -n+$ARCHIVE $0 | tar xzv -C "$TEMP_DIR" > /dev/null
 cd "$TEMP_DIR"
 
 if [ -f "info" ]; then
-    source "info"
+    source ./info
 else
     echo "Error: info file not found"
     exit 1
@@ -34,12 +34,6 @@ mkdir -p $REPO_APP_PATH
 mv -f application.tar.gz $REPO_APP_PATH/
 if [ -f  image.qcow2 ];then
     mv -f image.qcow2 $REPO_APP_PATH/
-fi
-
-if [ -n "$ENV_MARKETPLACE_SERVER_HOME" ]; then
-    HOME="$ENV_MARKETPLACE_SERVER_HOME"
-else
-    HOME="/var/lib/zstack/marketplace-server"
 fi
 
 PYTHON_EXEC=${MARKETPLACE_REPO_PYTHON_EXEC:-python}
