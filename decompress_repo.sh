@@ -31,7 +31,7 @@ $PYTHON_EXEC "$REPO_PATH/refresh_index.py"
 find "$TEMP_DIR" -type f -name "*.bin" | while read -r bin_file; do
     echo "===============================================" | tee -a "$LOG_FILE"
     echo "Importing $bin_file, command is: bash $bin_file $1" | tee -a "$LOG_FILE"
-    bash "$bin_file" "$1" 2>&1 > $LOG_FILE
+    bash "$bin_file" "$REPO_PATH" 2>&1 > $LOG_FILE
     echo "Import $bin_file successfully!" | tee -a "$LOG_FILE"
     echo "===============================================" | tee -a "$LOG_FILE"
 done
