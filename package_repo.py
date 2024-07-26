@@ -1,12 +1,14 @@
 import datetime
 import os
 import argparse
+import shutil
+
 import refresh_index
 import package_bin
 import bash
 
 decompress_repo_sh = "decompress_repo.sh"
-
+refresh_index_py = "refresh_index.py"
 
 def generate_repo_bin_name(include_image=None):
     now = datetime.datetime.now()
@@ -19,6 +21,8 @@ def generate_repo_bin_name(include_image=None):
 
 
 def compress_repo_bin(app_bins_path, include_image):
+    shutil.copy(refresh_index_py, app_bins_path)
+
     repo_targz_path = os.path.join(app_bins_path, "repo.tar.gz")
     compress_command = "tar -czvf repo.tar.gz *"
     r, _, e = bash.bash_roe(compress_command, workdir=app_bins_path)
@@ -32,6 +36,7 @@ def compress_repo_bin(app_bins_path, include_image):
         print("fail to create repo bin file, err: %s" % e)
         exit(1)
     os.remove(repo_targz_path)
+    os.remove(os.path.join(app_bins_path, refresh_index_py))
 
     return bin_name
 
