@@ -38,7 +38,7 @@ def refresh(root_path):
         "update_at": int(time.time())
     }
 
-    with open('index.json', 'w') as f:
+    with open(os.path.join(root_path, 'index.json'), 'w') as f:
         json.dump(data, f, indent=2)
 
 
