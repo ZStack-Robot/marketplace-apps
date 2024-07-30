@@ -9,10 +9,16 @@ image_qcow2 = "image.qcow2"
 decompress_bin_sh = "decompress_bin.sh"
 
 application_dir = "applications"
-application_tar_gz_dir = "target/application_targz"
-application_bins_dir = "target/application_bins"
-application_no_image_bins_dir = "target/application_no_image_bins"
+target_application_tar_gz_dir = "target/application_targz"
+target_application_bins_dir = "target/application_bins"
+target_application_no_image_bins_dir = "target/application_no_image_bins"
 images_dir = "images"
+
+
+def create_directories_if_not_exist(*dir_paths):
+    for path in dir_paths:
+        if not os.path.exists(path):
+            os.makedirs(path)
 
 
 def create_app_bin(app_id, architecture, version, copy_image):
@@ -20,24 +26,28 @@ def create_app_bin(app_id, architecture, version, copy_image):
     application_union_mark = "%s__%s__%s" % (app_id, architecture, version)
     relative_path = os.path.join(app_id, architecture, version)
 
+    # application source path
     app_path = os.path.join(application_dir, relative_path)
 
-    image_path = os.path.join(images_dir, relative_path, image_qcow2)
-    if not os.path.exists(os.path.join(images_dir, relative_path)):
-        os.makedirs(os.path.join(images_dir, relative_path))
+    # create target dir
+    app_target_targz_dir_path = os.path.join(target_application_tar_gz_dir, relative_path)
+    app_target_bins_dir_path = os.path.join(target_application_bins_dir, relative_path)
+    app_target_no_images_bins_dir_path = os.path.join(target_application_no_image_bins_dir, relative_path)
+    app_tmp_work_path = os.path.join("tmp", application_union_mark)
+    app_image_dir_path = os.path.join(images_dir, relative_path)
 
-    # check image exist if needed
-    if copy_image and not os.path.exists(image_path):
+    create_directories_if_not_exist(
+        app_target_targz_dir_path,
+        app_target_bins_dir_path,
+        app_target_no_images_bins_dir_path,
+        app_image_dir_path,
+        app_tmp_work_path
+    )
+
+    app_image_path = os.path.join(app_image_dir_path, image_qcow2)
+    if copy_image and not os.path.exists(app_image_path):
         print("image not exist, appid %s, architecture %s, version %s" % (app_id, architecture, version))
         exit(1)
-
-    targz_path = os.path.join(application_tar_gz_dir, relative_path, application_tar_gz)
-    if not os.path.exists(os.path.join(images_dir, relative_path)):
-        os.makedirs(os.path.join(application_tar_gz_dir, relative_path))
-
-    app_tmp_work_path = os.path.join("tmp", application_union_mark)
-    if not os.path.exists(app_tmp_work_path):
-        os.makedirs(app_tmp_work_path)
 
     # compress application to application/{app_id}/{arch}/{version}/application.tar.gz
     # copy it to tmp/{app_id}__{arch}__{version}/application.tar.gz
@@ -48,11 +58,12 @@ def create_app_bin(app_id, architecture, version, copy_image):
         print("fail to compress application, appid %s, architecture %s, version %s, error: %s" % (
             app_id, architecture, version, e))
         exit(1)
-    if os.path.exists(targz_path):
-        os.remove(targz_path)
+    target_targz_file_path = os.path.join(app_target_targz_dir_path, application_tar_gz)
+    if os.path.exists(target_targz_file_path):
+        os.remove(target_targz_file_path)
 
     shutil.copy(os.path.join(app_path, application_tar_gz), app_tmp_work_path)
-    shutil.move(os.path.join(app_path, application_tar_gz), targz_path)
+    shutil.move(os.path.join(app_path, application_tar_gz), target_targz_file_path)
 
     # tmp/{app_id}__{arch}__{version}/info
     file_path = os.path.join(app_tmp_work_path, "info")
@@ -65,16 +76,16 @@ def create_app_bin(app_id, architecture, version, copy_image):
     # ->
     # tmp/{app_id}__{arch}__{version}/image.qcow2
     if copy_image:
-        if not os.path.exists(application_bins_dir):
-            os.makedirs(application_bins_dir)
-        shutil.copy(image_path, app_tmp_work_path)
+        if not os.path.exists(target_application_bins_dir):
+            os.makedirs(target_application_bins_dir)
+        shutil.copy(app_image_dir_path, app_tmp_work_path)
         bin_name = "%s.bin" % application_union_mark
-        bin_target_path = "%s/%s" % (application_bins_dir, bin_name)
+        bin_target_path = "%s/%s" % (target_application_bins_dir, bin_name)
     else:
-        if not os.path.exists(application_no_image_bins_dir):
-            os.makedirs(application_no_image_bins_dir)
+        if not os.path.exists(target_application_no_image_bins_dir):
+            os.makedirs(target_application_no_image_bins_dir)
         bin_name = "%s__no_images.bin" % application_union_mark
-        bin_target_path = "%s/%s" % (application_no_image_bins_dir, bin_name)
+        bin_target_path = "%s/%s" % (target_application_no_image_bins_dir, bin_name)
 
     # tmp/{app_id}__{arch}__{version}/* 
     # -> 
@@ -116,9 +127,9 @@ def create_all_app_bins(copy_image=False):
                 create_app_bin(app_id, arch, version, copy_image)
 
     if copy_image:
-        return application_bins_dir
+        return target_application_bins_dir
     else:
-        return application_no_image_bins_dir
+        return target_application_no_image_bins_dir
 
 
 def main():
