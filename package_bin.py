@@ -21,8 +21,10 @@ def create_directories_if_not_exist(*dir_paths):
             os.makedirs(path)
 
 
-def remove_file
-
+def remove_file_if_exist(file_path):
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    
 
 def create_app_bin(app_id, architecture, version, copy_image):
     root_path = os.getcwd()
@@ -62,8 +64,7 @@ def create_app_bin(app_id, architecture, version, copy_image):
             app_id, architecture, version, e))
         exit(1)
     target_targz_file_path = os.path.join(app_target_targz_dir_path, application_tar_gz)
-    if os.path.exists(target_targz_file_path):
-        os.remove(target_targz_file_path)
+    remove_file_if_exist(target_targz_file_path)
 
     shutil.copy(os.path.join(app_path, application_tar_gz), app_tmp_work_path)
     shutil.move(os.path.join(app_path, application_tar_gz), target_targz_file_path)
@@ -107,8 +108,7 @@ def create_app_bin(app_id, architecture, version, copy_image):
     # target/application_bins/{app_id}__{arch}__{version}.bin
     # or
     # target/application_no_images_bins/{app_id}__{arch}__{version}.bin
-    if os.path.exists(bin_target_path):
-        os.remove(bin_target_path)
+    remove_file_if_exist(bin_target_path)
     shutil.move(tmp_bin_path, bin_target_path)
     shutil.rmtree(app_tmp_work_path)
 
