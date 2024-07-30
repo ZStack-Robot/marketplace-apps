@@ -32,7 +32,7 @@ find "$TEMP_DIR" -type f -name "*.bin" | while read -r bin_file; do
     bin_name=`basename $bin_file`
     echo "===============================================" | tee -a "$LOG_FILE"
     echo "Importing $bin_name" | tee -a "$LOG_FILE"
-    bash "$bin_file" "$REPO_PATH" 2>&1 > $LOG_FILE
+    bash "$bin_file" "$REPO_PATH" 2>&1 | tee -a $LOG_FILE
     echo "Import $bin_name successfully!" | tee -a "$LOG_FILE"
 done
 
