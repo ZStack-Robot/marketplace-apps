@@ -27,27 +27,32 @@
     },
     {
         "name": "backup_storage_uuid",
-        "required": true,
+        "required": false,
+        "default_value": "",
         "tag": "ZStack::backupStorageUuid"
     },
     {
         "name": "primary_storage_uuid",
-        "required": true,
+        "required": false,
+        "default_value": "",
         "tag": "ZStack::primaryStorageUuid"
     },
     {
         "name": "ceph_pool_name",
         "required": false,
+        "default_value": "",
         "tag": "ZStack::cephPoolUuid"
     },
     {
         "name": "cluster_uuid",
-        "required": true,
+        "required": false,
+        "default_value": "",
         "tag": "ZStack::clusterUuid"
     },
     {
         "name": "host_uuid",
-        "required": true,
+        "required": false,
+        "default_value": "",
         "tag": "ZStack::hostUuid"
     }
 ]

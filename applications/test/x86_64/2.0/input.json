@@ -28,21 +28,31 @@
     {
         "name": "image_store_uuid",
         "required": true,
+        "default_value": "",
         "tag": "ZStack::imageStoreUuid"
     },
     {
         "name": "primary_storage_uuid",
         "required": true,
+        "default_value": "",
         "tag": "ZStack::primaryStorageUuid"
     },
     {
         "name": "primary_storage_ceph_pool_uuid",
         "required": false,
+        "default_value": "",
         "tag": "ZStack::primaryStorageCephPoolUuid"
     },
     {
         "name": "cluster_uuid",
-        "required": true,
+        "required": false,
+        "default_value": "",
         "tag": "ZStack::clusterUuid"
+    },
+    {
+        "name": "host_uuid",
+        "required": false,
+        "default_value": "",
+        "tag": "ZStack::hostUuid"
     }
 ]
