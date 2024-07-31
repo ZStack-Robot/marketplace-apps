@@ -37,7 +37,7 @@ if [ -f  image.qcow2 ];then
 fi
 
 PYTHON_EXEC=${MARKETPLACE_REPO_PYTHON_EXEC:-python}
-$PYTHON_EXEC "$REPO_PATH/refresh_index.py" --root_path $REPO_PATH 
+$PYTHON_EXEC "./refresh_index.py" --root_path $REPO_PATH 
 
 echo "Import completed."
 exit 0

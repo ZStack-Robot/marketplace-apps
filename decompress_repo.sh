@@ -18,15 +18,17 @@ if [ ! -d "$REPO_PATH" ]; then
 fi
 
 if [ -f "$TEMP_DIR/refresh_index.py" ]; then
-    echo "Copying refresh_index.py to $REPO_PATH" | tee -a "$LOG_FILE"
-    cp "$TEMP_DIR/refresh_index.py" "$REPO_PATH/"
+
+    PYTHON_EXEC=${MARKETPLACE_REPO_PYTHON_EXEC:-python}
+    $PYTHON_EXEC "$TEMP_DIR/refresh_index.py" --root_path "$REPO_PATH" | tee -a "$LOG_FILE"
+
+    # echo "Copying refresh_index.py to $REPO_PATH" | tee -a "$LOG_FILE"
+    # cp "$TEMP_DIR/refresh_index.py" "$REPO_PATH/"
 else
     echo "Error: refresh_index.py not found in the extracted files" | tee -a "$LOG_FILE"
     exit 1
 fi
 
-PYTHON_EXEC=${MARKETPLACE_REPO_PYTHON_EXEC:-python}
-$PYTHON_EXEC "$REPO_PATH/refresh_index.py"
 
 find "$TEMP_DIR" -type f -name "*.bin" | while read -r bin_file; do
     bin_name=`basename $bin_file`

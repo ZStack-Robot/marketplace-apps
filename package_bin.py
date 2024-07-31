@@ -7,6 +7,7 @@ import sys
 application_tar_gz = "application.tar.gz"
 image_qcow2 = "image.qcow2"
 decompress_bin_sh = "decompress_bin.sh"
+refresh_index_py = "refresh_index.py"
 
 application_dir = "applications"
 target_application_tar_gz_dir = "target/application_targz"
@@ -75,6 +76,9 @@ def create_app_bin(app_id, architecture, version, copy_image):
         file.write("APP_ID={}\n".format(app_id))
         file.write("ARCH={}\n".format(architecture))
         file.write("VERSION={}\n".format(version))
+        
+    # refresh_index.py -> tmp/{app_id}__{arch}__{version}/refresh_index.py
+    shutil.copy(refresh_index_py, app_tmp_work_path)
 
     # images/{app_id}/{arch}/{version}/image.qcow2
     # ->

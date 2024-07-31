@@ -2,15 +2,15 @@ resource "zstack_vm" "vm" {
     name = "Marketplace_ZStack-CMP"
     description = "应用市场-CMP多云管理"
     root_disk = {
-        size = var.root_disk_size
-        primary_storage_uuid = var.primary_storage_uuid
-        ceph_pool_name = var.ceph_pool_name
+        size = {{ .root_disk_size }}
+        primary_storage_uuid =  {{ .primary_storage_uuid }}
+        ceph_pool_name = {{ .ceph_pool_name }}
     }
-    l3_network_uuids = var.l3_network_uuids
-    memory_size = var.memory_size
-    cpu_num = var.cpu_num
-    cluster_uuid = var.cluster_uuid
-    host_uuid = var.host_uuid
+    l3_network_uuids = {{ .l3_network_uuids }}
+    memory_size = {{ .memory_size }}
+    cpu_num = {{ .cpu_num }}
+    cluster_uuid = {{ .cluster_uuid }}
+    host_uuid = {{ .host_uuid }}
 
     marketplace = true
     never_stop = true
