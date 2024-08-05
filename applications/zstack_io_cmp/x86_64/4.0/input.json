@@ -16,7 +16,7 @@
     {
         "name": "l3_network_uuids",
         "required": true,
-        "tag": "ZStack::l3NetworkUuid"
+        "tag": "ZStack::l3NetworkUuids"
     },
     {
         "name": "cpu_num",
