@@ -3,8 +3,8 @@ resource "zstack_vm" "vm" {
     description = "应用市场-CMP多云管理"
     root_disk = {
         size = {{ .root_disk_size }}
-        primary_storage_uuid =  {{ .primary_storage_uuid }}
-        ceph_pool_name = {{ .ceph_pool_name }}
+        primary_storage_uuid =  {{ .root_disk_primary_storage_uuid }}
+        ceph_pool_name = {{ .root_disk_primary_storage_ceph_pool_uuid }}
     }
     l3_network_uuids = {{ .l3_network_uuids }}
     memory_size = {{ .memory_size }}

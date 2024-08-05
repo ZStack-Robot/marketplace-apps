@@ -26,22 +26,16 @@
         "tag": "ZStack::cpuNumber"
     },
     {
-        "name": "backup_storage_uuid",
-        "required": false,
+        "name": "root_disk_primary_storage_uuid",
+        "required": true,
         "default_value": "",
-        "tag": "ZStack::backupStorageUuid"
+        "tag": "ZStack::rootDiskPrimaryStorageUuid"
     },
     {
-        "name": "primary_storage_uuid",
+        "name": "root_disk_primary_storage_ceph_pool_uuid",
         "required": false,
         "default_value": "",
-        "tag": "ZStack::primaryStorageUuid"
-    },
-    {
-        "name": "ceph_pool_name",
-        "required": false,
-        "default_value": "",
-        "tag": "ZStack::cephPoolUuid"
+        "tag": "ZStack::rootDiskPrimaryStorageCephPoolUuid"
     },
     {
         "name": "cluster_uuid",
