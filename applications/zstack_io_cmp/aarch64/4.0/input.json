@@ -19,6 +19,12 @@
         "tag": "ZStack::l3NetworkUuids"
     },
     {
+        "name": "backup_storage_uuid",
+        "required": true,
+        "default_value": "",
+        "tag": "ZStack::backupStorageUuid"
+    },
+    {
         "name": "cpu_num",
         "required": true,
         "default_value": 16,

@@ -7,8 +7,8 @@ xxx
 ```
 
 ## 应用市场的CDN地址
-```angular2html
-xxx
+```
+ http://cdn.zstack.io/marketplace/v1
 ```
 
 ## 发布新的应用

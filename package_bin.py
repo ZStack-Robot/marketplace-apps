@@ -122,6 +122,8 @@ def create_all_app_bins(copy_image=False):
         app_path = os.path.join(application_dir, app_id)
         if not os.path.isdir(app_path):
             continue
+        if app_id == "test":
+            continue
         for arch in os.listdir(app_path):
             if arch not in ["x86_64", "aarch64"]:
                 continue

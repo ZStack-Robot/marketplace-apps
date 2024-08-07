@@ -44,7 +44,7 @@ def refresh(root_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate index.json for application.')
-    parser.add_argument('--root_path', type=str, help='Root path of the application repo', default=".")
+    parser.add_argument('--root_path', type=str, help='Root path of the application repo', default="./applications")
     args = parser.parse_args()
 
     refresh(args.root_path)
