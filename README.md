@@ -1,17 +1,19 @@
 # marketplace-apps
-用于打包应用市场的应用的配置文件，本仓库不包含镜像
+用于打包应用市场的应用的配置文件，本仓库不包含镜像 （test应用仅用于测试和示例，打包默认会跳过）
 
 镜像会单独在下面这个地址备份
 ```
-xxx
+http://192.168.200.100/mirror/xinhao.huang/marketplace-apps
 ```
 
 ## 应用市场的CDN地址
 ```
- http://cdn.zstack.io/marketplace/v1
+http://cdn.zstack.io/marketplace/v1
 ```
 
-## 发布新的应用
+## 发布新应用的流程
+### 0. clone本仓库
+
 ### 1. 在applications里新建应用目录
 ```
 $ mkdir -p applications/${app_id}/${arch}/${version}/
@@ -35,8 +37,25 @@ $ mkdir -p applications/${app_id}/${arch}/${version}/
 - src
   - terraform的资源编排文件
 
+### 2. 打包测试应用
 
-### 2. 打包当前仓库的所有应用
+执行
+```
+python package_repo.py 
+```
+生成images的对应目录
+
+把qcow2镜像放至images的对应目录里并命名为image.qcow2
+
+```
+python package_bin --app_id xxx --version xxx --arch xxx --include_images
+```
+会在 target/application_bins/${app_id}/${arch}/${version}/xxx.bin 生成带镜像的bin包
+
+上传至管理节点执行bash xxx.bin，再在ui上点击同步应用即可在应用市场看见
+
+
+### 3. 打包与提交
 ```
 $ python package_repo.py
 ```
@@ -49,7 +68,12 @@ target/application_targz/${app_id}/${arch}/${version}/application.tar.gz
 
 同时会生成新的index.json
 
-### 3. 上传至cdn
+提交代码至本仓库
+
+### 4. 上传至cdn
+
+**cdn的应用包联网的用户都会同步，未经过测试过的应用包请勿上传至cdn！！！**
+
 1. 在cdn新建目录
     ```
     ${app_id}/${arch}/${version}/
@@ -57,7 +81,9 @@ target/application_targz/${app_id}/${arch}/${version}/application.tar.gz
 
 2. 将应用的压缩包（application.tar.gz）和 镜像 (image.qcow2) 放到该目录下
 
-3. 用新的index.json 替换原先的index.json
+3. 确认无误后，用新的index.json 替换原先的index.json
+
+
 
 
 ## 生成不带镜像的REPO BIN包
@@ -105,6 +131,4 @@ $ bash zstack-marketplace-no-image-repo-xxxx.bin
 生成带镜像的REPO的 BIN包 ----- 因为应用镜像都特别大，几乎不会有使用场景
 
 生成不带镜像的应用BIN包 ----- 没有使用场景
-
-
 
