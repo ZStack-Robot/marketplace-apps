@@ -33,7 +33,7 @@
     },
     {
         "name": "root_disk_primary_storage_uuid",
-        "required": true,
+        "required": false,
         "default_value": "",
         "tag": "ZStack::rootDiskPrimaryStorageUuid"
     },
