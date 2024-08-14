@@ -1,0 +1,8 @@
+{
+    "name":"Bluepipe",
+    "description":"Bluepipe 描述",
+    "details":"Bluepipe 细节",
+    "appId": "bluepipe",
+    "category": "database",
+    "connectorType": "zstack"
+}
