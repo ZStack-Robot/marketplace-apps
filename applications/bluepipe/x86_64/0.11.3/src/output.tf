@@ -7,15 +7,15 @@ output "application_ip" {
 }
 
 output "application_port" {
-   value = 8100
+   value = 80
 }
 
 output "default_account" {
-   value = "admin"
+   value = "root"
 }
 
 output "default_password" {
-   value = "password"
+   value = "213456"
 }
 
 output "default_host_root_password" {

@@ -1,6 +1,6 @@
 resource "zstack_vm" "vm" {
-    name = "Marketplace_ZStack-CMP"
-    description = "应用市场-CMP多云管理"
+    name = "Marketplace_Bluepipe"
+    description = "bluepipe"
     root_disk = {
         size = {{ .root_disk_size }}
         primary_storage_uuid =  {{ .root_disk_primary_storage_uuid }}
@@ -30,7 +30,7 @@ resource "terraform_data" "remote-exec" {
    inline = [
      "/usr/bin/tar -xf /root/bluepipe-ce-v0.11.3.tar.gz",
      "/usr/bin/docker load < /root/docker/bluepipe_images.tar.gz",
-     "/usr/bin/docker compose up -d"
+     "cd /root/docker && /usr/bin/docker compose up -d"
     ]
     on_failure = fail
   }

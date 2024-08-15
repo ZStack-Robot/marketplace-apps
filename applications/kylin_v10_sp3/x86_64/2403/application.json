@@ -1,0 +1,8 @@
+{
+    "name":"Kylin-V10-SP3",
+    "description":"Kylin-V10-SP3 描述",
+    "details":"Kylin-V10-SP3 细节",
+    "appId": "kylin_v10_sp3",
+    "category": "os",
+    "connectorType": "zstack"
+}
