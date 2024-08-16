@@ -2,7 +2,7 @@
 set -e
 
 ARCHIVE=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' $0)
-REPO_PATH=$1
+REPO_PATH="${1:-/opt/zstack-marketplace-repo/}"
 
 if [ ! -d $REPO_PATH ]; then
     echo "Error: repo path not found"

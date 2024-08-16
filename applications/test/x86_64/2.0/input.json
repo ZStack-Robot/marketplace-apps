@@ -4,6 +4,7 @@
         "required": true,
         "default_value": 107374182400,
         "min": 85899345920,
+        "step_index": 1,
         "tag": "ZStack::rootDiskSize"
     },
     {
@@ -11,11 +12,13 @@
         "required": true,
         "default_value": 34359738368,
         "min":25769803776,
+        "step_index": 1,
         "tag": "ZStack::memorySize"
     },
     {
         "name": "l3_network_uuids",
         "required": true,
+        "step_index": 2,
         "tag": "ZStack::l3NetworkUuids"
     },
     {
@@ -23,6 +26,7 @@
         "required": true,
         "default_value": 16,
         "min": 8,
+        "step_index": 2,
         "tag": "ZStack::cpuNumber"
     },
     {
@@ -35,24 +39,28 @@
         "name": "root_disk_primary_storage_uuid",
         "required": false,
         "default_value": "",
+        "step_index": 2,
         "tag": "ZStack::rootDiskPrimaryStorageUuid"
     },
     {
         "name": "root_disk_primary_storage_ceph_pool_uuid",
         "required": false,
         "default_value": "",
+        "step_index": 2,
         "tag": "ZStack::rootDiskPrimaryStorageCephPoolUuid"
     },
     {
         "name": "cluster_uuid",
         "required": false,
         "default_value": "",
+        "step_index": 2,
         "tag": "ZStack::clusterUuid"
     },
     {
         "name": "host_uuid",
         "required": false,
         "default_value": "",
+        "step_index": 2,
         "tag": "ZStack::hostUuid"
     }
 ]

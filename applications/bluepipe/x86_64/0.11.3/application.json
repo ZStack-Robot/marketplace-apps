@@ -4,5 +4,8 @@
     "details":"# 数据同步和迁移服务产品介绍\n\n## 1. 主要功能\n\n产品开箱即用、全增量一体化、稳定健壮、高效实时。提供各种OLTP事务数据库(Oracle/MySQL/PG等)、OLAP分析数据库(Greenplum/Hive等)、NoSQL>消息队列(MongoDB/Kafka等)之间数据同步和迁移服务。\n\n## 2. 安装包大小\n\n800MB\n\n## 3. 适用期限\n\n- 社区版永久免费\n- 企业版免费试用15天\n\n## 4. 最小安装要求\n\n- 不小于4CPU/8GB内存/千兆网络带宽/200GB可>用磁盘空间\n- Linux / Darwin OS, 64位 x86 / arm芯片架构\n- Docker Engine >= 24.0.0\n- docker-compose-plugin >= 2.26.0\n\n## 5. 售卖相关信息\n\n### 5.1 版本对比\n\n| 功能类别 | 功能项 | 社区版(免费) | 企业版 |\n|---------|-------|-------------|-------|\n| 基础能力 | 数据源支持 | MySQL, PostgreSQL, MongoDB, Apache Hive | 社区版所有数据源，以及：Oracle, SQL Server, Inter Systems, GaussDB, GBase, Greenplum, HANA, Aliyun ODPS/MaxCompute, Kafka |\n| | CDC实时复制 | 支持 | 支持 |\n| | Schema Evolution | 支持 | 支持 |\n| | 列裁剪、列映射 | 支持 | 支持 |\n| 资源与调度 | 数据延时控制 | 1小时 | 秒级延时 |\n| | 最大并行度 | 2CDC任务 + 4批量同步 | 按实际购买 |\n| | 最大节点数 | 1 | 7 |\n| | 资源规格 | 2 CU | 4 CU起售 |\n| 扩展与集成 | API & SDK | 无 | 支持 |\n| | 数据库流控 | 无 | 支持 |\n| | 分库分表 | 无 | 支持 |\n| | 双向>同步 | 无 | 支持 |\n| | 监控与通知 | 无 | 支持 |\n\n注：1CU = 1VCore + 4GB的物理资源\n\n### 5.2 版本说明\n\n1. 社区版永久免费(2CU)\n2. 企业版请联系商务销售\n\n## 6. 售后联系方式\n\n- 办公座机：0571-84443685\n- 移动电话：+86 13616547011\n\n## 7. 厂家介绍\n\n杭州萃蓝网络科技有限公司，公司专注于现代数据栈基础设施产品化研发和服务，是杭州市未来科技城重点支持的科技型企业。团队均来自于头部云计算厂商数据库、计算平台>等核心基础技术团队、以及2018/2019年浙江省科技进步一等奖获得者，在Data Infra领域有着丰富的架构和设计经验。\n\n主营业务提供标准化数据库传输产品DTS，基于云原生分布式和数据库底层技术，实现多种数据源端到端数据复制能力，是企业上云、容灾备份、系统解耦、数据分析等诸多场景的前置条件，是下一代企业级软件架构的核心枢纽组件。\n",
     "appId": "bluepipe",
     "category": "database",
-    "connectorType": "zstack"
+    "connector_type": "zstack",
+    "requirements": "不小于4CPU/8GB内存/千兆网络带宽/200GB可用磁盘空间；",
+    "estimated_installation_time": 1000,
+    "image_size": 1386217472
 }

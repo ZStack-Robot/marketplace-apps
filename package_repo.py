@@ -58,8 +58,8 @@ def main():
     file_name = create_repo_bin_file(include_images=include_images)
     refresh_index.refresh("applications")
 
-    print("build repo bin file success!")
-    print("file name is :%s" % file_name)
+    print("\nbuild repo bin file success!")
+    print("repo file name is: %s" % file_name)
 
 
 if __name__ == "__main__":

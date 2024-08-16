@@ -31,21 +31,17 @@ def create_app_bin(app_id, architecture, version, copy_image):
     root_path = os.getcwd()
     application_union_mark = "%s__%s__%s" % (app_id, architecture, version)
     relative_path = os.path.join(app_id, architecture, version)
-
     # application source path
     app_path = os.path.join(application_dir, relative_path)
-
     # create target dir
     app_target_targz_dir_path = os.path.join(target_application_tar_gz_dir, relative_path)
-    app_target_bins_dir_path = os.path.join(target_application_bins_dir, relative_path)
-    app_target_no_images_bins_dir_path = os.path.join(target_application_no_image_bins_dir, relative_path)
+    #app_target_bins_dir_path = os.path.join(target_application_bins_dir, relative_path)
+    #app_target_no_images_bins_dir_path = os.path.join(target_application_no_image_bins_dir, relative_path)
     app_tmp_work_path = os.path.join("tmp", application_union_mark)
     app_image_dir_path = os.path.join(images_dir, relative_path)
 
     create_directories_if_not_exist(
         app_target_targz_dir_path,
-        app_target_bins_dir_path,
-        app_target_no_images_bins_dir_path,
         app_image_dir_path,
         app_tmp_work_path
     )
@@ -113,6 +109,7 @@ def create_app_bin(app_id, architecture, version, copy_image):
     # or
     # target/application_no_images_bins/{app_id}__{arch}__{version}.bin
     remove_file_if_exist(bin_target_path)
+    print("create application bin: %s" % bin_target_path)
     shutil.move(tmp_bin_path, bin_target_path)
     shutil.rmtree(app_tmp_work_path)
 
@@ -139,30 +136,22 @@ def create_all_app_bins(copy_image=False):
 
 def main():
     parser = argparse.ArgumentParser(description='Process some parameters.')
-    group = parser.add_mutually_exclusive_group(required=True)
 
-    # Add --app_id, --version, --arch arguments
-    app_group = group.add_argument_group('Application Information')
-    app_group.add_argument('--app_id', type=str, help='Application ID')
-    app_group.add_argument('--version', type=str, help='Version')
-    app_group.add_argument('--arch', type=str, help='Architecture')
-
-    # Add --all argument
-    group.add_argument('--all', action='store_true', help='Process all applications')
-
-    # Add --include_images argument
-    parser.add_argument('--copy_images', type=bool, default=False, help='Include images')
+    parser.add_argument('--all', action='store_true', help='Process all applications')
+    parser.add_argument('--app_id', type=str, help='Application ID')
+    parser.add_argument('--version', type=str, help='Version')
+    parser.add_argument('--arch', type=str, help='Architecture')
+    parser.add_argument('--copy_images', action='store_true', help='Include images')
 
     args = parser.parse_args()
 
     # Check if --app_id, --version, --arch are set together
     if not args.all:
-        if not (args.app_id and args.version and args.arch):
-            print("Error: --app_id, --version, --arch parameters must be set together")
+        if not all([args.app_id, args.version, args.arch]):
+            print("Error: When not using --all, --app_id, --version, and --arch must all be provided.")
             parser.print_help()
             sys.exit(1)
-
-        create_app_bin(args.app_id, args.version, args.arch, args.copy_images)
+        create_app_bin(args.app_id, args.arch, args.version, args.copy_images)
     else:
         create_all_app_bins(args.copy_images)
 

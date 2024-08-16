@@ -1,0 +1,14 @@
+[
+    {
+        "name": "step 1",
+        "index": 1,
+        "zh_label": "步骤1",
+        "en_label": "Step 1"
+    },
+    {
+        "name": "step 2",
+        "index": 2,
+        "zh_label": "步骤2",
+        "en_label": "Step 2"
+    }
+]

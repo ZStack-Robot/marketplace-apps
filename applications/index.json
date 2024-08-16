@@ -30,6 +30,17 @@
       ]
     }, 
     {
+      "app_id": "kylin_v10_sp3", 
+      "support_versions": [
+        {
+          "architecture": "x86_64", 
+          "versions": [
+            "2403"
+          ]
+        }
+      ]
+    }, 
+    {
       "app_id": "zstack_io_cmp", 
       "support_versions": [
         {
@@ -47,5 +58,5 @@
       ]
     }
   ], 
-  "update_at": 1723605074
+  "update_at": 1723786126
 }
