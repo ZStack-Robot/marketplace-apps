@@ -41,6 +41,8 @@ def create_app_bin(app_id, architecture, version, copy_image):
     app_image_dir_path = os.path.join(images_dir, relative_path)
 
     create_directories_if_not_exist(
+        target_application_bins_dir,
+        target_application_no_image_bins_dir,
         app_target_targz_dir_path,
         app_image_dir_path,
         app_tmp_work_path
