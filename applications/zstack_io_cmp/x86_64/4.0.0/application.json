@@ -7,5 +7,5 @@
     "requirements": "",
     "estimated_installation_time": 1000,
     "image_size": 4912268800,
-    "connectorType": "zstack"
+    "connector_type": "zstack"
 }

@@ -4,5 +4,5 @@
     "details":"test details v2",
     "appId": "app-example v2",
     "category": "test category",
-    "connectorType": "zstack"
+    "connector_type": "zstack"
 }
