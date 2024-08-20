@@ -6,7 +6,9 @@ resource "zstack_vm" "vm" {
         primary_storage_uuid =  {{ .root_disk_primary_storage_uuid }}
         ceph_pool_name = {{ .root_disk_primary_storage_ceph_pool_uuid }}
     }
-    l3_network_uuids = {{ .l3_network_uuids }}
+    networks = [{
+        uuid = {{ .l3_network_uuid }}
+    }]
     memory_size = {{ .memory_size }}
     cpu_num = {{ .cpu_num }}
     cluster_uuid = {{ .cluster_uuid }}
@@ -28,7 +30,7 @@ resource "terraform_data" "remote-exec" {
 
   provisioner "remote-exec" {
    inline = [
-     "/usr/bin/tar -xf /root/bluepipe-ce-v0.11.3.tar.gz",
+     "/usr/bin/tar -xf /root/bluepipe-ce-arm-v0.11.5.tar.gz",
      "/usr/bin/docker load < /root/docker/bluepipe_images.tar.gz",
      "cd /root/docker && /usr/bin/docker compose up -d"
     ]

@@ -14,9 +14,9 @@
         "tag": "ZStack::memorySize"
     },
     {
-        "name": "l3_network_uuids",
+        "name": "l3_network_uuid",
         "required": true,
-        "tag": "ZStack::l3NetworkUuids"
+        "tag": "ZStack::l3NetworkUuid"
     },
     {
         "name": "backup_storage_uuid",

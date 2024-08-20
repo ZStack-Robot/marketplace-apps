@@ -6,7 +6,9 @@ resource "zstack_vm" "vm" {
         primary_storage_uuid =  {{ .root_disk_primary_storage_uuid }}
         ceph_pool_name = {{ .root_disk_primary_storage_ceph_pool_uuid }}
     }
-    l3_network_uuids = {{ .l3_network_uuids }}
+    networks = [{
+        uuid = {{ .l3_network_uuid }}
+    }]
     memory_size = {{ .memory_size }}
     cpu_num = {{ .cpu_num }}
     cluster_uuid = {{ .cluster_uuid }}
