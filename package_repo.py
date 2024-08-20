@@ -55,11 +55,11 @@ def main():
     args = parser.parse_args()
 
     include_images = args.include_images
-    file_name = create_repo_bin_file(include_images=include_images)
+    filename = create_repo_bin_file(include_images=include_images)
     refresh_index.refresh("applications")
-
+    absolute_path = os.path.abspath(filename)
     print("\nbuild repo bin file success!")
-    print("repo file name is: %s" % file_name)
+    print("repo file name is: %s" % absolute_path)
 
 
 if __name__ == "__main__":
