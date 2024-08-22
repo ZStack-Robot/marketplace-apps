@@ -16,7 +16,7 @@
   {
     "name": "memory_size",
     "required": true,
-    "default_value": 25769803776,
+    "default_value": 34359738368,
     "min": 17179869184,
     "tag": "ZStack::memorySize"
   },
@@ -48,16 +48,6 @@
     "name": "ceph_pool_name",
     "required": false,
     "tag": "ZStack::cephPoolUuid"
-  },
-  {
-    "name": "cluster_uuid",
-    "required": false,
-    "tag": "ZStack::clusterUuid"
-  },
-  {
-    "name": "host_uuid",
-    "required": false,
-    "tag": "ZStack::hostUuid"
   },
   {
     "name": "dev_ops",
@@ -97,6 +87,7 @@
   {
     "name": "ntp_servers_ip",
     "type": "input",
+    "default_value": "",
     "en_label": "ntp_servers_ip",
     "zh_label": "外部NTP服务器IP",
     "required": false
