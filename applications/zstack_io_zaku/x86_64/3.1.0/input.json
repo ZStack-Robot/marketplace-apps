@@ -1,0 +1,104 @@
+[
+  {
+    "name": "root_disk_size",
+    "required": true,
+    "default_value": 536870912000,
+    "min": 107374182400,
+    "tag": "ZStack::rootDiskSize"
+  },
+  {
+    "name": "data_disk_size",
+    "required": false,
+    "tag": "ZStack::dataDiskSize",
+    "default_value": 536870912000,
+    "min": 107374182400
+  },
+  {
+    "name": "memory_size",
+    "required": true,
+    "default_value": 25769803776,
+    "min": 17179869184,
+    "tag": "ZStack::memorySize"
+  },
+  {
+    "name": "l3_network_uuids",
+    "en_label": "l3_network_uuids",
+    "zh_label": "网络",
+    "required": true,
+    "tag": "ZStack::l3NetworkUuids"
+  },
+  {
+    "name": "cpu_num",
+    "required": true,
+    "default_value": 16,
+    "min": 8,
+    "tag": "ZStack::cpuNumber"
+  },
+  {
+    "name": "backup_storage_uuid",
+    "required": true,
+    "tag": "ZStack::backupStorageUuid"
+  },
+  {
+    "name": "primary_storage_uuid",
+    "required": true,
+    "tag": "ZStack::primaryStorageUuid"
+  },
+  {
+    "name": "ceph_pool_name",
+    "required": false,
+    "tag": "ZStack::cephPoolUuid"
+  },
+  {
+    "name": "cluster_uuid",
+    "required": false,
+    "tag": "ZStack::clusterUuid"
+  },
+  {
+    "name": "host_uuid",
+    "required": false,
+    "tag": "ZStack::hostUuid"
+  },
+  {
+    "name": "dev_ops",
+    "type": "switch",
+    "en_label": "dev_ops",
+    "zh_label": "DevOps",
+    "required": false
+  },
+  {
+    "name": "access_key",
+    "type": "input",
+    "en_label": "access_key",
+    "zh_label": "云平台AccessKey ID",
+    "required": true
+  },
+  {
+    "name": "access_secret",
+    "type": "input",
+    "en_label": "access_secret",
+    "zh_label": "云平台AccessKey Secret",
+    "required": true
+  },
+  {
+    "name": "cloud_password",
+    "type": "password",
+    "en_label": "cloud_password",
+    "zh_label": "云平台管理员密码",
+    "required": true
+  },
+  {
+    "name": "cloud_host_ui",
+    "type": "input",
+    "en_label": "ZStack Cloud URL",
+    "zh_label": "云平台URL",
+    "required": true
+  },
+  {
+    "name": "ntp_servers_ip",
+    "type": "input",
+    "en_label": "ntp_servers_ip",
+    "zh_label": "外部NTP服务器IP",
+    "required": false
+  }
+]
