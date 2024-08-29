@@ -41,7 +41,8 @@
   },
   {
     "name": "primary_storage_uuid",
-    "required": true,
+    "required": false,
+    "default_value": "",
     "tag": "ZStack::primaryStorageUuid"
   },
   {
