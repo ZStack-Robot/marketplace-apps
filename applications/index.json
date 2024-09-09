@@ -10,7 +10,18 @@
           ]
         }
       ]
+    }, 
+    {
+      "app_id": "zstack_io_migrate", 
+      "support_versions": [
+        {
+          "architecture": "x86_64", 
+          "versions": [
+            "10.0.645.10"
+          ]
+        }
+      ]
     }
   ], 
-  "update_at": 1724659269
+  "update_at": 1725874479
 }
