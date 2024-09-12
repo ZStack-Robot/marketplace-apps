@@ -8,8 +8,8 @@
     },
     {
         "name": "application_protocol",
-        "en_label": "应用协议",
-        "zh_label": "Application Protocol",
+        "en_label": "Application Protocol",
+        "zh_label": "应用协议",
         "type": "string",
         "tag": "Application:protocol"
     },

@@ -1,6 +1,6 @@
 resource "zstack_vm" "vm" {
-  name = "ZMigrate"
-  description = "应用市场-ZMigrate 迁移服务"
+  name = "Grafana"
+  description = "应用市场-Grafana-可视化"
   root_disk = {
     size = {{.root_disk_size}}
   }
@@ -28,7 +28,7 @@ resource "terraform_data" "healthy_check" {
   provisioner "local-exec" { 
      command     = var.wait_for_migrate_health_cmd 
      environment = { 
-       ENDPOINT =  "https://${zstack_vm.vm.ip}/console"
+       ENDPOINT =  "http://${zstack_vm.vm.ip}:3000/"
      } 
    } 
 }
