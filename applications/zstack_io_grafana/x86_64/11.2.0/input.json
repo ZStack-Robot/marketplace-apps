@@ -1,0 +1,35 @@
+[
+  {
+    "name": "root_disk_size",
+    "required": true,
+    "default_value": 107374182400,
+    "min": 107374182400,
+    "tag": "ZStack::rootDiskSize"
+  },
+  {
+    "name": "memory_size",
+    "required": true,
+    "default_value": 4294967296,
+    "min": 2147483648,
+    "tag": "ZStack::memorySize"
+  },
+  {
+    "name": "l3_network_uuids",
+    "en_label": "l3_network_uuids",
+    "zh_label": "网络",
+    "required": true,
+    "tag": "ZStack::l3NetworkUuids"
+  },
+  {
+    "name": "cpu_num",
+    "required": true,
+    "default_value": 2,
+    "min": 1,
+    "tag": "ZStack::cpuNumber"
+  },
+  {
+    "name": "backup_storage_uuid",
+    "required": true,
+    "tag": "ZStack::backupStorageUuid"
+  }
+]

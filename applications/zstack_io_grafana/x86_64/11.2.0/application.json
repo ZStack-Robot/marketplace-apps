@@ -1,0 +1,8 @@
+{
+  "name": "Grafana 是一款开源指标分析和可视化套件",
+  "description": "Grafana 是一款开源指标分析和可视化套件，用于可视化支持各种数据源的时间序列数据，应用市场也提供对应ZStack监控模板",
+  "details": "Grafana 是一款开源指标分析和可视化套件，用于可视化支持各种数据源的时间序列数据。 本应用由ZStack打包。产品中提及的相应商标归相应公司所有",
+  "appId": "zstack.io.grafana",
+  "category": "cloud",
+  "connector_type": "zstack"
+}
