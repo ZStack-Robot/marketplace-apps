@@ -135,13 +135,18 @@ resource "terraform_data" "change_local_nginxconfig_reload" {
   }
 }
 
+locals {
+  private_key_path = "${data.external.check_mn.result["zstack_home"]}/WEB-INF/classes/ansible/rsaKeys/id_rsa"
+  private_key      = fileexists(local.private_key_path) ? file(local.private_key_path) : ""
+}
+
 resource "terraform_data" "change_remote_nginxconfig_reload" {
   count = data.external.check_mn.result["peer_ip"] != "" ? 1 : 0
   depends_on = [local_file.cloud_nginx]
   connection {
     type        = "ssh"
     user        = "root"
-    private_key = fileexists("/root/.ssh/id_rsa") ? file("/root/.ssh/id_rsa") : ""
+    private_key = local.private_key
     host        = data.external.check_mn.result["peer_ip"]
   }
   provisioner "file" {
