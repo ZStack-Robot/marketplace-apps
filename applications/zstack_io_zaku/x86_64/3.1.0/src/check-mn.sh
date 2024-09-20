@@ -39,6 +39,7 @@ cat <<EOF
     "self_ip": "$self_ip",
     "vip": "$vip",
     "peer_ip": "$peer_ip",
-    "zstack_config_path": "$zstack_config_path"
+    "zstack_config_path": "$zstack_config_path",
+    "zstack_home": "$zstack_home"
 }
 EOF
