@@ -1,8 +1,7 @@
 
 data "external" "check_mn" {
-  program = ["/usr/bin/sh", "./check-mn.sh"]
+  program = ["sudo", "/usr/bin/sh", "./check-mn.sh"]
 }
-
 
 resource "zstack_vm" "vm" {
   count = 3
@@ -131,7 +130,7 @@ resource "terraform_data" "remote-exec" {
 resource "terraform_data" "change_local_nginxconfig_reload" {
   depends_on = [local_file.cloud_nginx]
   provisioner "local-exec" {
-    command = "cp ./zaku.http.nginx.conf ${data.external.check_mn.result["zstack_config_path"]}/configs/zaku.http.nginx.conf && /usr/sbin/nginx -s reload -c ${data.external.check_mn.result["zstack_config_path"]}/configs/nginx.conf -p ${data.external.check_mn.result["zstack_config_path"]}"
+    command = "cp ./zaku.http.nginx.conf ${data.external.check_mn.result["zstack_config_path"]}/configs/zaku.http.nginx.conf && sudo /usr/sbin/nginx -s reload -c ${data.external.check_mn.result["zstack_config_path"]}/configs/nginx.conf -p ${data.external.check_mn.result["zstack_config_path"]}"
   }
 }
 
