@@ -1,0 +1,5 @@
+node_types:
+  compute:
+    enabled: true
+    collectors:
+      - kvm

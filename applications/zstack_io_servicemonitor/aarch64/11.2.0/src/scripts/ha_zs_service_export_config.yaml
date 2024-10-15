@@ -1,0 +1,8 @@
+node_types:
+  ha:
+    enabled: true
+    collectors:
+      - ui
+      - ha
+      - kvm
+      - mn

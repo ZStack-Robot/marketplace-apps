@@ -1,0 +1,62 @@
+---
+process_names:
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-Host-Agent::kvmagent"
+  comm:
+  - "python"
+  cmdline:
+  - "kvmagent"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-Host-Monitor::node_exporter"
+  comm:
+  - "node_exporter"
+  cmdline:
+  - "zstack/kvm/"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-Host-Monitor::collectd_exporter"
+  comm:
+  - "collectd_export"
+  cmdline:
+  - "zstack/kvm/"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-Host-Monitor::collectd"
+  comm:
+  - "collectd"
+  cmdline:
+  - "zstack/kvm"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-Host-Monitor::pushgateway"
+  comm:
+  - "pushgateway"
+  cmdline:
+  - "host_pushgateway"
+  - "kvm"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-Management::ZStack-MN-core-java"
+  comm:
+  - "java"
+  cmdline:
+  - "-DappName=zstack"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-Management::MySQL"
+  comm:
+  - "mysqld"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-Management::ZStack-consoleproxy"
+  comm:
+  - "python"
+  cmdline:
+  - "consoleproxy"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-UI-Service::zstack-ui-server"
+  comm:
+  - "node"
+  cmdline:
+  - "zstack-ui-server"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-UI-Service::zstack-ui-nginx"
+  comm:
+  - "nginx"
+  cmdline:
+  - "zstack-ui"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-MN-Monitor::prometheus"
+  comm:
+  - "prometheus2"
+  cmdline:
+  - "webapps/zstack"
+- name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-MN-Monitor::pushgateway"
+  comm:
+  - "pushgateway"
+  cmdline:
+  - "apache-tomcat"
+  - "webapps/zstack"

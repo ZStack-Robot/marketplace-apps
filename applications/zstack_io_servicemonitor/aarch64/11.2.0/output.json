@@ -1,0 +1,42 @@
+[
+    {
+        "name": "vm_uuids",
+        "en_label": "vm_uuids",
+        "zh_label": "vm_uuids",
+        "type":"array",
+        "tag":"ZStack:vmInstanceUuid"
+    },
+    {
+        "name": "application_protocol",
+        "en_label": "Application Protocol",
+        "zh_label": "应用协议",
+        "type": "string",
+        "tag": "Application:protocol"
+    },
+    {
+        "name": "application_ip",
+        "en_label": "Application IP",
+        "zh_label": "应用IP",
+        "type":"string",
+        "tag":"Application:ip"
+    },
+    {
+        "name": "application_port",
+        "en_label": "Application Port",
+        "zh_label": "应用端口",
+        "type":"number",
+        "tag":"Application:port"
+    },
+    {
+        "name": "default_account",
+        "en_label": "Default User Name",
+        "zh_label": "默认账号",
+        "type":"string"
+    },
+    {
+        "name": "default_password",
+        "en_label": "Default Password",
+        "zh_label": "默认密码",
+        "type":"password"
+    }
+]
