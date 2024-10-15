@@ -158,8 +158,8 @@ resource "terraform_data" "copy_and_enable_service_on_mn" {
     on_failure = fail
   }
   provisioner "file" {
-    source      = "${path.module}/scripts/zssvc_exporter.service"
-    destination = "/etc/systemd/system/zssvc_exporter.service"
+    source      = "${path.module}/scripts/zstack_service_exporter.service"
+    destination = "/etc/systemd/system/zstack_service_exporter.service"
     on_failure = fail
   }
   provisioner "file" {
@@ -177,9 +177,9 @@ resource "terraform_data" "copy_and_enable_service_on_mn" {
     "systemctl daemon-reload",
     "chmod +x /var/lib/zstack/zsservice/zs_service_exporter",
     "chmod +x /var/lib/zstack/zsservice/process-exporter",
-    "systemctl enable zssvc_exporter.service",
+    "systemctl enable zstack_service_exporter.service",
     "systemctl enable process_exporter.service",
-    "systemctl start zssvc_exporter.service",
+    "systemctl start zstack_service_exporter.service",
     "systemctl start process_exporter.service"
     ]
     on_failure = fail
@@ -217,8 +217,8 @@ resource "terraform_data" "copy_and_enable_service_on_compute" {
     on_failure = fail
   }
   provisioner "file" {
-    source      = "${path.module}/scripts/zssvc_exporter.service"
-    destination = "/etc/systemd/system/zssvc_exporter.service"
+    source      = "${path.module}/scripts/zstack_service_exporter.service"
+    destination = "/etc/systemd/system/zstack_service_exporter.service"
     on_failure = fail
   }
   provisioner "file" {
@@ -236,9 +236,9 @@ resource "terraform_data" "copy_and_enable_service_on_compute" {
     "systemctl daemon-reload",
     "chmod +x /var/lib/zstack/zsservice/zs_service_exporter",
     "chmod +x /var/lib/zstack/zsservice/process-exporter",
-    "systemctl enable zssvc_exporter.service",
+    "systemctl enable zstack_service_exporter.service",
     "systemctl enable process_exporter.service",
-    "systemctl start zssvc_exporter.service",
+    "systemctl start zstack_service_exporter.service",
     "systemctl start process_exporter.service"
     ]
     on_failure = fail
@@ -274,11 +274,11 @@ resource "null_resource" "destroy_service_on_mn" {
   provisioner "remote-exec" {
     when = destroy
     inline = [
-      "systemctl stop zssvc_exporter.service",
+      "systemctl stop zstack_service_exporter.service",
       "systemctl stop process_exporter.service",
-      "systemctl disable zssvc_exporter.service",
+      "systemctl disable zstack_service_exporter.service",
       "systemctl disable process_exporter.service",
-      "rm /etc/systemd/system/zssvc_exporter.service",
+      "rm /etc/systemd/system/zstack_service_exporter.service",
       "rm /etc/systemd/system/process_exporter.service",
       "rm -rf /var/lib/zstack/zsservice",
       "systemctl daemon-reload"
@@ -303,11 +303,11 @@ resource "null_resource" "destroy_service_on_compute" {
   provisioner "remote-exec" {
     when = destroy
     inline = [
-      "systemctl stop zssvc_exporter.service",
+      "systemctl stop zstack_service_exporter.service",
       "systemctl stop process_exporter.service",
-      "systemctl disable zssvc_exporter.service",
+      "systemctl disable zstack_service_exporter.service",
       "systemctl disable process_exporter.service",
-      "rm /etc/systemd/system/zssvc_exporter.service",
+      "rm /etc/systemd/system/zstack_service_exporter.service",
       "rm /etc/systemd/system/process_exporter.service",
       "rm -rf /var/lib/zstack/zsservice",
       "systemctl daemon-reload"
