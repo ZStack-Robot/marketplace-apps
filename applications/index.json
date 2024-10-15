@@ -1,6 +1,17 @@
 {
   "applications": [
     {
+      "app_id": "zstack_io_grafana",
+      "support_versions": [
+        {
+          "architecture": "x86_64",
+          "versions": [
+            "11.2.0"
+          ]
+        }
+      ]
+    },
+    {
       "app_id": "zstack_io_migrate",
       "support_versions": [
         {
@@ -23,7 +34,7 @@
       ]
     },
     {
-      "app_id": "zstack_io_grafana",
+      "app_id": "zstack_io_servicemonitor",
       "support_versions": [
         {
           "architecture": "x86_64",
@@ -34,5 +45,5 @@
       ]
     }
   ],
-  "update_at": 1727078362
+  "update_at": 1728899706
 }
