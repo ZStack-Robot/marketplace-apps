@@ -41,9 +41,15 @@
           "versions": [
             "11.2.0"
           ]
+        },
+        {
+          "architecture": "aarch64",
+          "versions": [
+            "11.2.0"
+          ]
         }
       ]
     }
   ],
-  "update_at": 1728899706
+  "update_at": 1728985466
 }
