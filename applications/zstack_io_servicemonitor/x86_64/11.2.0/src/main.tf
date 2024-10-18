@@ -117,6 +117,7 @@ resource "terraform_data" "copy_files_to_vm" {
     user     = "root"
     password = "ZStack@123"
     host     = zstack_vm.vm.0.ip
+    timeout  = "10m"
   }
   provisioner "file" {
     source      = "${path.module}/zstack_service_exporter.json"
