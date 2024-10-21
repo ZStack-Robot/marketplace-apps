@@ -45,8 +45,6 @@ locals {
   hosts_management_ips = [for host in data.zstack_hosts.hosts.hosts : host.managementip]
   # Compute hosts (排除 MN hosts)
   compute_hosts = [for host in data.zstack_hosts.hosts.hosts : host.managementip if !contains(local.mnhosts_hostnames, host.managementip)]
-
-  # 判断如果只有一个管理节点，则配置为management, 且使用
 }
 
 # 根据 mn 节点数量决定配置文件

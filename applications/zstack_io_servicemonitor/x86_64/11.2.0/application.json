@@ -1,7 +1,7 @@
 {
   "name": "ZStack 组件服务监控套件",
   "description": "ZStack组件服务监控套件，包含采集监控指标，Prometheus和Grafana。 Grafana提供对应ZStack监控模板",
-  "details": "ZStack组件服务监控套件，包含采集监控指标，Prometheus和Grafana。 Grafana提供对应ZStack监控模板。 本应用由ZStack打包。产品中提及的相应商标归相应公司所有",
+  "details": "ZStack组件服务监控套件，包含采集监控指标，Prometheus和Grafana。 Grafana提供对应ZStack监控模板。 本应用由ZStack打包。产品中提及的相应商标归相应公司所有。默认展示30分钟指标数据，刚部署的监控服务要稍等10-30分钟才能完全展示",
   "appId": "zstack.io.servicemonitor",
   "category": "cloud",
   "connector_type": "zstack"

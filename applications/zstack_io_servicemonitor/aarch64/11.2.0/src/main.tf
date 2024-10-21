@@ -43,8 +43,14 @@ data "zstack_hosts" "hosts" {
 locals {
   mnhosts_hostnames = [for mn in data.zstack_mnnodes.mnhosts.mn_nodes : mn.host_name]
   hosts_management_ips = [for host in data.zstack_hosts.hosts.hosts : host.managementip]
-    # Compute hosts (exclude MN hosts)
+  # Compute hosts (排除 MN hosts)
   compute_hosts = [for host in data.zstack_hosts.hosts.hosts : host.managementip if !contains(local.mnhosts_hostnames, host.managementip)]
+}
+
+# 根据 mn 节点数量决定配置文件
+locals {
+ # node_type = length(local.mnhosts_hostnames) == 1 ? "management" : "ha"
+  config_file = length(local.mnhosts_hostnames) == 1 ? "mn_zs_service_export_config.yaml" : "ha_zs_service_export_config.yaml"
 }
 
 # 过滤掉重叠的mn节点
@@ -109,6 +115,7 @@ resource "terraform_data" "copy_files_to_vm" {
     user     = "root"
     password = "ZStack@123"
     host     = zstack_vm.vm.0.ip
+    timeout  = "10m"
   }
   provisioner "file" {
     source      = "${path.module}/zstack_service_exporter.json"
@@ -143,7 +150,7 @@ resource "terraform_data" "copy_and_enable_service_on_mn" {
     ]
   }
   provisioner "file" {
-    source      = "${path.module}/scripts/mn_zs_service_export_config.yaml"
+    source      = "${path.module}/scripts/${local.config_file}" # "${path.module}/scripts/mn_zs_service_export_config.yaml"
     destination = "/var/lib/zstack/zsservice/config.yaml"
     on_failure = fail
   }

@@ -51,12 +51,12 @@ process_names:
   - "zstack-ui"
 - name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-MN-Monitor::prometheus"
   comm:
-  - "prometheus2"
+  - "prometheus2_aar"
   cmdline:
-  - "webapps/zstack"
+  - "/webapps/zstack/WEB-INF/classes/tools/prometheus2_aarch64"
 - name: "{{.Comm}}|{{.PID}}|{{.ExeFull}}|ZStack-MN-Monitor::pushgateway"
   comm:
-  - "pushgateway"
+  - "pushgateway_aar"
   cmdline:
   - "apache-tomcat"
   - "webapps/zstack"
