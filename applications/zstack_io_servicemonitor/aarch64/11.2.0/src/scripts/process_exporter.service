@@ -14,4 +14,4 @@ MemoryLimit=1G
 Restart=always
 RestartSec=30s
 [Install]
-WantedBy=multi-user.targe
+WantedBy=multi-user.target
