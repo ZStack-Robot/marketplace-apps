@@ -5,6 +5,7 @@ data "external" "check_mn" {
 
 
 resource "zstack_vm" "vm" {
+  depends_on = [null_resource.check_cluster_health]
   count = 1
   name = "ZStack组件服务监控套件"
   description = "应用市场-组件服务监控套件-Prometheus-Grafana"
@@ -53,6 +54,11 @@ locals {
   config_file = length(local.mnhosts_hostnames) == 1 ? "mn_zs_service_export_config.yaml" : "ha_zs_service_export_config.yaml"
 }
 
+# 检查是否存在非 "Connected" 状态的主机
+locals {
+  all_hosts_connected = alltrue([for host in data.zstack_hosts.hosts.hosts : host.status == "Connected"])
+}
+
 # 过滤掉重叠的mn节点
 locals {
   compute_process_json = jsonencode([
@@ -75,6 +81,14 @@ locals {
   private_key      = fileexists(local.private_key_path) ? file(local.private_key_path) : ""
 }
 
+# 仅当集群不健康时才会创建该 `null_resource`，输出错误信息并阻止后续操作
+resource "null_resource" "check_cluster_health" {
+  count = local.all_hosts_connected ? 0 : 1
+
+  provisioner "local-exec" {
+    command = "echo '集群不健康，不允许部署' && exit 1"
+  }
+}
 
 # 输出mn节点ip到配置文件mn_process.json
 resource "local_file" "mn_hosts_json" {
@@ -137,7 +151,7 @@ resource "terraform_data" "copy_files_to_vm" {
 # 部署zssvc_exporter和process_exporter到mn节点
 resource "terraform_data" "copy_and_enable_service_on_mn" {
   count = length(data.zstack_mnnodes.mnhosts.mn_nodes)
-  depends_on = [zstack_vm.vm]
+  depends_on = [zstack_vm.vm,null_resource.check_cluster_health]
   connection {
     type        = "ssh"
     user        = "root"
@@ -196,7 +210,7 @@ resource "terraform_data" "copy_and_enable_service_on_mn" {
 # 部署zssvc_exporter和process_exporter到计算节点
 resource "terraform_data" "copy_and_enable_service_on_compute" {
   count = length(local.compute_hosts)
-  depends_on = [zstack_vm.vm]
+  depends_on = [zstack_vm.vm,null_resource.check_cluster_health]
   connection {
     type        = "ssh"
     user        = "root"
@@ -254,7 +268,7 @@ resource "terraform_data" "copy_and_enable_service_on_compute" {
 
 
 resource "terraform_data" "healthy_check" {
-  depends_on = [zstack_vm.vm.0]
+  depends_on = [zstack_vm.vm.0,null_resource.check_cluster_health]
 
   provisioner "local-exec" { 
      command     = var.wait_for_migrate_health_cmd 
