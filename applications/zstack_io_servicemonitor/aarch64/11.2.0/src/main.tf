@@ -86,7 +86,7 @@ resource "null_resource" "check_cluster_health" {
   count = local.all_hosts_connected ? 0 : 1
 
   provisioner "local-exec" {
-    command = "echo '集群不健康，不允许部署' && exit 1"
+    command = "echo '集群不健康，停止部署，请检查物理机状态' && exit 1"
   }
 }
 
