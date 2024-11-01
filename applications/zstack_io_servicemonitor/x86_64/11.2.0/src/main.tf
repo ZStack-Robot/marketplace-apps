@@ -1,11 +1,12 @@
+/*
 data "external" "check_mn" {
   program = ["sudo", "/usr/bin/sh", "./scripts/check-mn.sh"]
 }
+*/
 
 
 
 resource "zstack_vm" "vm" {
-  depends_on = [null_resource.check_cluster_health]
   count = 1
   name = "ZStack组件服务监控套件"
   description = "应用市场-组件服务监控套件-Prometheus-Grafana"
@@ -48,16 +49,18 @@ locals {
   compute_hosts = [for host in data.zstack_hosts.hosts.hosts : host.managementip if !contains(local.mnhosts_hostnames, host.managementip)]
 }
 
+/*
 # 根据 mn 节点数量决定配置文件
 locals {
  # node_type = length(local.mnhosts_hostnames) == 1 ? "management" : "ha"
   config_file = length(local.mnhosts_hostnames) == 1 ? "mn_zs_service_export_config.yaml" : "ha_zs_service_export_config.yaml"
 }
+*/
 
 # 检查是否存在非 "Connected" 状态的主机
-locals {
-  all_hosts_connected = alltrue([for host in data.zstack_hosts.hosts.hosts : host.status == "Connected"])
-}
+# locals {
+#  all_hosts_connected = alltrue([for host in data.zstack_hosts.hosts.hosts : host.status == "Connected"])
+# }
 
 # 过滤掉重叠的mn节点
 locals {
@@ -75,12 +78,15 @@ locals {
   ])
 }
 
+/*
 # 读取mn的ssh id_rsa
 locals {
   private_key_path = "${data.external.check_mn.result["zstack_home"]}/WEB-INF/classes/ansible/rsaKeys/id_rsa"
   private_key      = fileexists(local.private_key_path) ? file(local.private_key_path) : ""
 }
+*/
 
+/*
 # 仅当集群不健康时才会创建该 `null_resource`，输出错误信息并阻止后续操作
 resource "null_resource" "check_cluster_health" {
   count = local.all_hosts_connected ? 0 : 1
@@ -89,6 +95,7 @@ resource "null_resource" "check_cluster_health" {
     command = "echo '集群不健康，停止部署，请检查物理机状态' && exit 1"
   }
 }
+*/
 
 # 输出mn节点ip到配置文件mn_process.json
 resource "local_file" "mn_hosts_json" {
@@ -148,6 +155,8 @@ resource "terraform_data" "copy_files_to_vm" {
   }
 }
 
+/*  
+# 删除往Cloud 宿主机部署exporter
 # 部署zssvc_exporter和process_exporter到mn节点
 resource "terraform_data" "copy_and_enable_service_on_mn" {
   count = length(data.zstack_mnnodes.mnhosts.mn_nodes)
@@ -266,9 +275,10 @@ resource "terraform_data" "copy_and_enable_service_on_compute" {
   }
 }
 
+*/
 
 resource "terraform_data" "healthy_check" {
-  depends_on = [zstack_vm.vm.0,null_resource.check_cluster_health]
+  depends_on = [zstack_vm.vm.0]
 
   provisioner "local-exec" { 
      command     = var.wait_for_migrate_health_cmd 
@@ -278,6 +288,8 @@ resource "terraform_data" "healthy_check" {
    } 
 }
 
+/*
+# 删除卸载exporter逻辑
 # 当资源释放时，同时卸载mn节点的exporter
 resource "null_resource" "destroy_service_on_mn" {
   count =  length(data.zstack_mnnodes.mnhosts.mn_nodes)
@@ -335,3 +347,5 @@ resource "null_resource" "destroy_service_on_compute" {
     ]
   }
 }
+
+*/
