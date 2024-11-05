@@ -1,12 +1,6 @@
-/*
-data "external" "check_mn" {
-  program = ["sudo", "/usr/bin/sh", "./scripts/check-mn.sh"]
-}
-*/
-
-
 
 resource "zstack_vm" "vm" {
+  depends_on = [null_resource.check_process_exporter_connectivity, null_resource.check_zs_exporter_connectivity]
   count = 1
   name = "ZStack组件服务监控套件"
   description = "应用市场-组件服务监控套件-Prometheus-Grafana"
@@ -49,19 +43,6 @@ locals {
   compute_hosts = [for host in data.zstack_hosts.hosts.hosts : host.managementip if !contains(local.mnhosts_hostnames, host.managementip)]
 }
 
-/*
-# 根据 mn 节点数量决定配置文件
-locals {
- # node_type = length(local.mnhosts_hostnames) == 1 ? "management" : "ha"
-  config_file = length(local.mnhosts_hostnames) == 1 ? "mn_zs_service_export_config.yaml" : "ha_zs_service_export_config.yaml"
-}
-*/
-
-# 检查是否存在非 "Connected" 状态的主机
-# locals {
-#  all_hosts_connected = alltrue([for host in data.zstack_hosts.hosts.hosts : host.status == "Connected"])
-# }
-
 # 过滤掉重叠的mn节点
 locals {
   compute_process_json = jsonencode([
@@ -77,25 +58,6 @@ locals {
     }
   ])
 }
-
-/*
-# 读取mn的ssh id_rsa
-locals {
-  private_key_path = "${data.external.check_mn.result["zstack_home"]}/WEB-INF/classes/ansible/rsaKeys/id_rsa"
-  private_key      = fileexists(local.private_key_path) ? file(local.private_key_path) : ""
-}
-*/
-
-/*
-# 仅当集群不健康时才会创建该 `null_resource`，输出错误信息并阻止后续操作
-resource "null_resource" "check_cluster_health" {
-  count = local.all_hosts_connected ? 0 : 1
-
-  provisioner "local-exec" {
-    command = "echo '集群不健康，停止部署，请检查物理机状态' && exit 1"
-  }
-}
-*/
 
 # 输出mn节点ip到配置文件mn_process.json
 resource "local_file" "mn_hosts_json" {
@@ -128,9 +90,38 @@ resource "local_file" "hosts_json" {
   filename = "${path.module}/zstack_service_exporter.json"
 }
 
+# 为脚本添加执行权限
+resource "null_resource" "add_execute_permission" {
+  provisioner "local-exec" {
+    command = "chmod +x ${path.module}/scripts/exporter_check.sh"
+  }
+}
+
+# Cloud节点对应target 9256连通性检查
+resource "null_resource" "check_process_exporter_connectivity" {
+  depends_on = [data.zstack_hosts.hosts]
+
+  provisioner "local-exec" {
+    command = <<-EOT
+     ${path.module}/scripts/exporter_check.sh "9256" ${join(" ",local.hosts_management_ips)}
+    EOT
+  }
+}
+
+# Cloud节点对应target 9112连通性检查
+resource "null_resource" "check_zs_exporter_connectivity" {
+  depends_on = [data.zstack_hosts.hosts]
+
+  provisioner "local-exec" {
+    command = <<-EOT
+     ${path.module}/scripts/exporter_check.sh "9112" ${join(" ",local.hosts_management_ips)}
+    EOT
+   }
+}
+
 # 把zstack_service_exporter.json配置文件写到Prometheus的对应路径
 resource "terraform_data" "copy_files_to_vm" {
-  depends_on = [zstack_vm.vm]
+    depends_on = [zstack_vm.vm]
     connection {
     type     = "ssh"
     user     = "root"
@@ -155,127 +146,6 @@ resource "terraform_data" "copy_files_to_vm" {
   }
 }
 
-/*  
-# 删除往Cloud 宿主机部署exporter
-# 部署zssvc_exporter和process_exporter到mn节点
-resource "terraform_data" "copy_and_enable_service_on_mn" {
-  count = length(data.zstack_mnnodes.mnhosts.mn_nodes)
-  depends_on = [zstack_vm.vm,null_resource.check_cluster_health]
-  connection {
-    type        = "ssh"
-    user        = "root"
-    private_key = local.private_key
-    host        = data.zstack_mnnodes.mnhosts.mn_nodes[count.index].host_name
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "mkdir -p /var/lib/zstack/zsservice"
-    ]
-  }
-  provisioner "file" {
-    source      = "${path.module}/scripts/${local.config_file}" # "${path.module}/scripts/mn_zs_service_export_config.yaml"
-    destination = "/var/lib/zstack/zsservice/config.yaml"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/scripts/process-config.yaml"
-    destination = "/var/lib/zstack/zsservice/process-config.yaml"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/scripts/process_exporter.service"
-    destination = "/etc/systemd/system/process_exporter.service"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/scripts/zstack_service_exporter.service"
-    destination = "/etc/systemd/system/zstack_service_exporter.service"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/bin/zs_service_exporter"
-    destination = "/var/lib/zstack/zsservice/zs_service_exporter"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/bin/process-exporter"
-    destination = "/var/lib/zstack/zsservice/process-exporter"
-    on_failure = fail
-  }
-  provisioner "remote-exec" {
-    inline = [
-    "systemctl daemon-reload",
-    "chmod +x /var/lib/zstack/zsservice/zs_service_exporter",
-    "chmod +x /var/lib/zstack/zsservice/process-exporter",
-    "systemctl enable zstack_service_exporter.service",
-    "systemctl enable process_exporter.service",
-    "systemctl start zstack_service_exporter.service",
-    "systemctl start process_exporter.service"
-    ]
-    on_failure = fail
-  }
-}
-
-# 部署zssvc_exporter和process_exporter到计算节点
-resource "terraform_data" "copy_and_enable_service_on_compute" {
-  count = length(local.compute_hosts)
-  depends_on = [zstack_vm.vm,null_resource.check_cluster_health]
-  connection {
-    type        = "ssh"
-    user        = "root"
-    private_key = local.private_key
-    host        = local.compute_hosts[count.index]
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "mkdir -p /var/lib/zstack/zsservice"
-    ]
-  }
-  provisioner "file" {
-    source      = "${path.module}/scripts/compute_zs_service_export_config.yaml"
-    destination = "/var/lib/zstack/zsservice/config.yaml"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/scripts/process-config.yaml"
-    destination = "/var/lib/zstack/zsservice/process-config.yaml"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/scripts/process_exporter.service"
-    destination = "/etc/systemd/system/process_exporter.service"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/scripts/zstack_service_exporter.service"
-    destination = "/etc/systemd/system/zstack_service_exporter.service"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/bin/zs_service_exporter"
-    destination = "/var/lib/zstack/zsservice/zs_service_exporter"
-    on_failure = fail
-  }
-  provisioner "file" {
-    source      = "${path.module}/bin/process-exporter"
-    destination = "/var/lib/zstack/zsservice/process-exporter"
-    on_failure = fail
-  }
-  provisioner "remote-exec" {
-    inline = [
-    "systemctl daemon-reload",
-    "chmod +x /var/lib/zstack/zsservice/zs_service_exporter",
-    "chmod +x /var/lib/zstack/zsservice/process-exporter",
-    "systemctl enable zstack_service_exporter.service",
-    "systemctl enable process_exporter.service",
-    "systemctl start zstack_service_exporter.service",
-    "systemctl start process_exporter.service"
-    ]
-    on_failure = fail
-  }
-}
-
-*/
 
 resource "terraform_data" "healthy_check" {
   depends_on = [zstack_vm.vm.0]
@@ -287,65 +157,3 @@ resource "terraform_data" "healthy_check" {
      } 
    } 
 }
-
-/*
-# 删除卸载exporter逻辑
-# 当资源释放时，同时卸载mn节点的exporter
-resource "null_resource" "destroy_service_on_mn" {
-  count =  length(data.zstack_mnnodes.mnhosts.mn_nodes)
-  triggers = {
-    mn = data.zstack_mnnodes.mnhosts.mn_nodes[count.index].host_name
-    private_key = local.private_key
-  }
-  connection {
-    type        = "ssh"
-    user        = "root"
-    private_key = self.triggers.private_key
-    host        = self.triggers.mn 
-  }
-  
-  provisioner "remote-exec" {
-    when = destroy
-    inline = [
-      "systemctl stop zstack_service_exporter.service",
-      "systemctl stop process_exporter.service",
-      "systemctl disable zstack_service_exporter.service",
-      "systemctl disable process_exporter.service",
-      "rm /etc/systemd/system/zstack_service_exporter.service",
-      "rm /etc/systemd/system/process_exporter.service",
-      "rm -rf /var/lib/zstack/zsservice",
-      "systemctl daemon-reload"
-    ]
-  }
-}
-
-# 当资源释放时，同时卸载计算节点的exporter
-resource "null_resource" "destroy_service_on_compute" {
-  count = length(local.compute_hosts)
-  triggers = {
-    compute = local.compute_hosts[count.index]
-    private_key = local.private_key
-  }
-  connection {
-    type        = "ssh"
-    user        = "root"
-    private_key = self.triggers.private_key
-    host        = self.triggers.compute 
-  }
-
-  provisioner "remote-exec" {
-    when = destroy
-    inline = [
-      "systemctl stop zstack_service_exporter.service",
-      "systemctl stop process_exporter.service",
-      "systemctl disable zstack_service_exporter.service",
-      "systemctl disable process_exporter.service",
-      "rm /etc/systemd/system/zstack_service_exporter.service",
-      "rm /etc/systemd/system/process_exporter.service",
-      "rm -rf /var/lib/zstack/zsservice",
-      "systemctl daemon-reload"
-    ]
-  }
-}
-
-*/

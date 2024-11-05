@@ -1,7 +1,0 @@
-node_types:
-  management:
-    enabled: true
-    collectors:
-      - ui
-      - kvm
-      - mn
