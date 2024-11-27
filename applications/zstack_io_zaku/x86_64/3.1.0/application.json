@@ -1,8 +1,0 @@
-{
-  "name": "ZStack Zaku 容器管理",
-  "description": "ZStack Zaku 容器管理",
-  "details": "简单易用的容器管理，提供GPU管理调度、多租户、多集群、资源配额、CI/CD、微服务治理等功能。服务依据传统用户使用习惯，降低容器使用复杂性，帮助用户轻松实现容器集群管理和部署，快速上手，享受云原生便利。",
-  "appId": "zstack.io.zaku",
-  "category": "cloud",
-  "connector_type": "zstack"
-}

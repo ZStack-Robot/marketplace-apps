@@ -1,8 +1,0 @@
-{
-  "name": "ZStack ZMigrate 迁移",
-  "description": "ZMigrate 迁移平台是混合云迁移产品",
-  "details": "ZMigrate 迁移平台是专为ZStack 云平台打造的混合云迁移产品，支持P2V、V2V、Cloud to Cloud等多种场景，不管是本地上云，还是从云迁移到本地，都可以通过ZMigrate 迁移平台完成。ZMigrate 迁移平台以其强大的兼容性和架构设计，不管是各种物理环境、各种应用场景，各种公有云、私有云等来源场景，都可以高效稳定地迁移到ZStack 云平台。",
-  "appId": "zstack.io.zmigrate",
-  "category": "cloud",
-  "connector_type": "zstack"
-}

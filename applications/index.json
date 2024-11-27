@@ -10,46 +10,7 @@
           ]
         }
       ]
-    },
-    {
-      "app_id": "zstack_io_migrate",
-      "support_versions": [
-        {
-          "architecture": "x86_64",
-          "versions": [
-            "10.0.645.10"
-          ]
-        }
-      ]
-    },
-    {
-      "app_id": "zstack_io_zaku",
-      "support_versions": [
-        {
-          "architecture": "x86_64",
-          "versions": [
-            "3.1.0"
-          ]
-        }
-      ]
-    },
-    {
-      "app_id": "zstack_io_servicemonitor",
-      "support_versions": [
-        {
-          "architecture": "x86_64",
-          "versions": [
-            "11.2.0"
-          ]
-        },
-        {
-          "architecture": "aarch64",
-          "versions": [
-            "11.2.0"
-          ]
-        }
-      ]
     }
   ],
-  "update_at": 1731394758
+  "update_at": 1731488904
 }
